@@ -1,0 +1,17 @@
+#!/bin/sh
+user="T04435"
+reponame="$2"
+if [ "$user" = "" ]; then
+read -p "Enter Github username: " user
+fi
+if [ "$reponame" = "" ]; then
+read -p "Enter Github Repository Name: " reponame
+fi
+rails new $reponame
+cd $reponame
+curl -u "$user" https://api.github.com/user/repos -d "{\"name\":\"$reponame\"}"
+git init
+git add -A
+git commit -m "Initial Commit"
+git remote add origin git@github.com:T04435/$reponame.git
+git push -u origin master
